@@ -1,0 +1,21 @@
+{
+  "name": "com.niftyhat.niftycrafts",
+  "version": "0.0.1",
+   "dependencies":
+      {
+        "com.niftyhat.niftycore": "0.0.1"
+      },
+  "displayName": "Nifty Crafts",
+  "description": "Crafting system for the Nifty Framework",
+  "keywords": [
+    "NiftyFramework",
+    "Crafting",
+"Nifty"
+  ],
+  "author": {
+    "name": "Duncan Saunders",
+    "email": "duncan@niftyhat.com",
+    "url": "https://www.niftyhat.com"
+  }
+
+}

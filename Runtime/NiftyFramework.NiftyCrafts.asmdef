@@ -1,0 +1,16 @@
+{
+    "name": "NiftyCrafts.Runtime",
+    "rootNamespace": "NiftyFramework.NiftyCrafts",
+    "references": [
+        "GUID:8101e47628147464e8b685173d3b3053"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
