@@ -1,3 +1,5 @@
+using NiftyFramework.NiftyCrafts.Blueprint;
+
 namespace NiftyFramework.NiftyCrafts
 {
     public class Generator<TBlueprint, TCollectable> where TBlueprint : Blueprint<TCollectable>

@@ -1,6 +1,6 @@
 using NiftyFramework.Core.Condition;
 
-namespace NiftyFramework.NiftyCrafts
+namespace NiftyFramework.NiftyCrafts.Blueprint
 {
     /// <summary>
     /// 
@@ -13,6 +13,11 @@ namespace NiftyFramework.NiftyCrafts
         protected Blueprint()
         {
             
+        }
+        
+        protected Blueprint(StatefulConditionSet conditionSet)
+        {
+            ConditionSet = conditionSet;
         }
 
         public Blueprint(StatefulCondition condition, ICraftySlotOutput<TCollectable> output)
