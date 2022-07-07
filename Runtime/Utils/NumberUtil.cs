@@ -6,7 +6,7 @@ namespace NiftyFramework.Utils
     {
         public static string Humanize(this double number)
         {
-            string[] suffix = {"f", "a", "p", "n", "μ", "m", string.Empty, "k", "M", "G", "T", "P", "E"};
+            string[] suffix = {"f", "a", "p", "n", "μ", "m", string.Empty, "k", "M", "G", "T", "P", "E", "Z", "Y"};
 
             if (number == 0)
             {
