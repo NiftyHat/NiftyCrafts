@@ -1,4 +1,4 @@
-﻿namespace NiftyFramework.NiftyCrafts
+﻿namespace NiftyFramework.NiftyCrafts.Blueprint
 {
     public interface ICraftySlotOutput<TCollectable> : ICraftySlot<TCollectable>
     {

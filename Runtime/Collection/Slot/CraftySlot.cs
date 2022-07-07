@@ -36,6 +36,18 @@ namespace NiftyFramework.NiftyCrafts.Slot
             }
             return _collectable.Id == collectable.Id;
         }
+
+        public bool AcceptsChange(ICraftySlotChange<TCollectable> change)
+        {
+            if (_collectable != null)
+            {
+                if (change.Amount == -1)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
         
         public void SetCollectable(TCollectable collectable)
         {

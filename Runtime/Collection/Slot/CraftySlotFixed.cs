@@ -1,11 +1,12 @@
 using System;
+using NiftyFramework.NiftyCrafts.Blueprint;
 
 namespace NiftyFramework.NiftyCrafts.Slot
 {
     /// <summary>
     /// Output slots can't change the Collectable inside them.
     /// </summary>
-    public class CraftySlotOutputCollectable<TCollectable> : ICraftySlotOutput<TCollectable>
+    public class CraftySlotFixed<TCollectable> : ICraftySlotOutput<TCollectable>
     {
         private double _amount;
         public double Amount => _amount;
@@ -61,12 +62,25 @@ namespace NiftyFramework.NiftyCrafts.Slot
             return false;
         }
 
+        public bool AcceptsChange(ICraftySlotChange<TCollectable> change)
+        {
+            if (!Contains(change.Collectable))
+            {
+                return false;
+            }
+            if (change.Amount >= 0) 
+            {
+                return HasSpace(change.Amount);
+            }
+            return ContainsAmount(-change.Amount);
+        }
+
         public void GetProperty<TCraftyProperty>() where TCraftyProperty : ICraftyCollectableProperty
         {
             throw new NotImplementedException();
         }
 
-        public CraftySlotOutputCollectable(TCollectable collectable, double max = 1, double amount = 0)
+        public CraftySlotFixed(TCollectable collectable, double max = 1, double amount = 0)
         {
             _collectable = collectable;
             _max = max;

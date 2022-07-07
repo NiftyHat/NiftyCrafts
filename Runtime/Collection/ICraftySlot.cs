@@ -9,6 +9,7 @@ namespace NiftyFramework.NiftyCrafts
         
         bool IsEmpty();
         bool Contains(TCollectable collectable);
+        bool AcceptsChange(ICraftySlotChange<TCollectable> change);
         void GetProperty<TCraftyProperty>() where TCraftyProperty : ICraftyCollectableProperty;
     }
 }

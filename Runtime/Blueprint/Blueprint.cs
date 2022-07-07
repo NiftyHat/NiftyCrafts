@@ -27,13 +27,18 @@ namespace NiftyFramework.NiftyCrafts.Blueprint
             ConditionSet.OnStateChanged += HandleStateChange;
         }
 
+        public void Run()
+        {
+            
+        }
+
         private void HandleStateChange(bool canOutput, StatefulCondition condition)
         {
             if (canOutput)
             {
                 foreach (ICraftySlotOutput<TCollectable> output in SlotOutputs)
                 {
-                    output.Produce();
+                    //output.Produce();
                 }
             }
         }

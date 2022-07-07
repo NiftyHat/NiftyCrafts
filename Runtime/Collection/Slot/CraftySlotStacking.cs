@@ -4,15 +4,19 @@ namespace NiftyFramework.NiftyCrafts.Slot
 {
     public class CraftySlotStacking<TCollectable> : ICraftySlot<TCollectable> where TCollectable : class, ICraftyCollectable, IComparable<TCollectable>
     {
+        public delegate void AmountChanged(TCollectable collectable, double oldAmount, double changedAmount);
+
         private double _amount;
         public double Amount => _amount;
 
         private TCollectable _collectable;
         public TCollectable Collectable => _collectable;
         public event Action<ICraftySlot<TCollectable>> OnSlotChanged;
-        public event Action<TCollectable, double, double> OnAmountChanged;
+        public event AmountChanged OnAmountChanged;
+        public event AmountChanged OnMaxChanged;
 
         private double _max = double.MaxValue;
+        public double Max => _max;
 
         public bool IsEmpty()
         {
@@ -33,6 +37,33 @@ namespace NiftyFramework.NiftyCrafts.Slot
             return false;
         }
 
+        public bool AcceptsChange(ICraftySlotChange<TCollectable> change)
+        {
+            if (change.Collectable == null)
+            {
+                //if the change is to nothing it's valid to just remove it.
+                return true;
+            }
+            if (Contains(change.Collectable))
+            {
+                if (change.Amount >= 0) 
+                {
+                    return HasSpace(change.Amount);
+                }
+                return ContainsAmount(-change.Amount);
+            }
+            else
+            {
+                //can't remove stuff from an empty slot
+                if (change.Amount < 0)
+                {
+                    return false;
+                }
+                //not enough space for the new item.
+                return change.Amount < _max;
+            }
+        }
+
         public void GetProperty<TCraftyProperty>() where TCraftyProperty : ICraftyCollectableProperty
         {
             throw new NotImplementedException();
@@ -44,6 +75,13 @@ namespace NiftyFramework.NiftyCrafts.Slot
             _amount = amount;
         }
         
+        public CraftySlotStacking(TCollectable collectable, double amount, double max)
+        {
+            _collectable = collectable;
+            _amount = amount;
+            _max = max;
+        }
+        
         public CraftySlotStacking()
         {
             _collectable = default(TCollectable);
@@ -52,12 +90,12 @@ namespace NiftyFramework.NiftyCrafts.Slot
 
         public bool ContainsAmount(double count)
         {
-            return count > _amount;
+            return _amount >= count;
         }
 
         public bool HasSpace(double count)
         {
-            return _amount + count < _max;
+            return _amount + count <= _max;
         }
 
         public double RemainingSpace()
@@ -72,7 +110,12 @@ namespace NiftyFramework.NiftyCrafts.Slot
         /// <param name="clamp"></param>
         public void SetMax(double max, bool clamp)
         {
-            _max = max;
+            if (_max != max)
+            {
+                double changeAmount = _max - max;
+                _max = max;
+                OnMaxChanged?.Invoke(_collectable,max, changeAmount);
+            }
             if (clamp && _amount > _max)
             {
                 double changeAmount = _max - _amount;
